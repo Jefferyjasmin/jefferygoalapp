@@ -4,7 +4,9 @@ const connectDB = require("./config/db");
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 5000;
 const goalRoutes = require("./routes/goalRoutes");
+const userRoutes = require("./routes/userRoutes");
 const app = express();
+
 const { errorHandler } = require("./middleware/errorMiddleware");
 
 // connecting to db
@@ -20,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 //middleWare
 
 app.use("/api/goals", goalRoutes);
+app.use("/api/users", userRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {
