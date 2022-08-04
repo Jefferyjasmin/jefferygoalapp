@@ -1,17 +1,39 @@
-import react from 'react'
+ 
+import { toast } from 'react-toastify';
 import { FaSignInAlt} from 'react-icons/fa'
-import { useState, useEffect } from "react"
+import{useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { login ,reset} from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
 
 function Login() {
- 
+
+const navigate = useNavigate()
+ const dispatch = useDispatch()
+ const  {user, isLoading, isError, isSuccess, message} = useSelector(state=> state.auth)
+
+  useEffect(() => {
+   if(isError){
+    toast.error(message)
+   }
+
+   if(isSuccess|| user){
+    navigate('/')
+   }
+
+   dispatch(reset())
+  }, [user,isError,isSuccess,message,navigate,dispatch])
+
+
   const [formData, setFormData] = useState({
   
     email: "",
     password: "",
  
   });
-
-  const { name, email, password, password2 } = formData;
+const { name, email, password, password2 } = formData;
+   
   const onChange=(e)=>{
   setFormData((prevState)=>({
     ...prevState,
@@ -19,7 +41,18 @@ function Login() {
   }))
   }
    const onSubmit=(e)=>{
-    e.preventDefualt()
+  
+     e.preventDefault();
+    const userData = {
+      email,
+      password
+    }
+
+    dispatch(login(userData))
+  }
+  
+   if(isLoading){
+    return <Spinner/>
   }
   
   
@@ -34,7 +67,7 @@ function Login() {
     <section className="form">
       <form onSubmit={onSubmit}>
          
-        <div className="form-group"> <input type='text' className='form-control' id='email' email='email' value={email} placeholder="Enter your Email" onChange={onChange}/></div>
+        <div className="form-group"> <input type='text' className='form-control' id='email' name='email' value={email} placeholder="Enter your Email" onChange={onChange}/></div>
         <div className="form-group"> <input type='text' className='form-control' id='password' name='password' value={password} placeholder="Enter your password" onChange={onChange}/></div>
         
        <div className="form-group">
