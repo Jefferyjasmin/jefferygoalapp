@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const colors = require("colors");
 const connectDB = require("./config/db");
-const dotenv = require("dotenv").config();
+
+require("dotenv").config();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 const goalRoutes = require("./routes/goalRoutes");

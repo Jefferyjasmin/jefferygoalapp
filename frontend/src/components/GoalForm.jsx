@@ -1,6 +1,6 @@
-import e from 'cors'
+
 import React, { useState , useEffect} from 'react'
-import{  useDispatch} from 'react-redux'
+import{useDispatch} from 'react-redux'
 import {createGoal} from '../features/goals/goalSlice'
 function GoalForm() {
  const dispatch = useDispatch()

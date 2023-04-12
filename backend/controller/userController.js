@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  // Has password
+  // Hash password
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassowrd = await bcrypt.hash(password, salt);
@@ -49,6 +49,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // find users by email
   const user = await User.findOne({ email });
+  console.log("this is user", user);
   // check password
   if (user && (await bcrypt.compare(password, user.password))) {
     return res.json({
@@ -59,7 +60,7 @@ const loginUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid");
+    throw new Error("Incorrect values");
   }
 });
 

@@ -1,10 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Dashborad from "./pages/Dashborad";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UpdateGaolForm from "./components/UpdateGoalForm";
+// import TaskDashboard from "./tasks/TaskDashboard";
 function App() {
   return (
     <>
@@ -15,6 +17,7 @@ function App() {
             <Route path="/" element={<Dashborad />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/updategoal/:id" element={<UpdateGaolForm />} />
           </Routes>
         </div>
       </Router>

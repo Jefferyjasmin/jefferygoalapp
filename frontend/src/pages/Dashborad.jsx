@@ -1,4 +1,5 @@
 import React from "react";
+import './Dashboard.css';
 import {useEffect} from "react";
 import{useSelector, useDispatch} from 'react-redux'
 import {useNavigate} from "react-router-dom";
@@ -36,19 +37,15 @@ function Dashborad() {
   }
   return <>
   <section className="heading">
-    <h1>
+    <h2 className="dashboard_username">
       Welcome {user && user.name}
-    </h1>
-    <p>Goals Dashboard</p>
+    </h2 >
+    <p className="dashboard_headering">Goals Dashboard</p>
   </section>
   <GoalForm/>
   <section className="content">
     {goals.length > 0? (<div className="goals">
       {goals.map((goal)=>( <GoalItem key={goal._id} goal={goal}/>
-        
-       
-       
-        
       )) }
       </div>) : (<><h3>You havent set any goals</h3></>)}
   </section>

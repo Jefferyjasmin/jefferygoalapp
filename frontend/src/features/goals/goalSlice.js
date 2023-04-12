@@ -8,6 +8,7 @@ const initialState = {
   isLoading: false,
   message: "",
   goals: [],
+  goal: null,
 };
 
 export const createGoal = createAsyncThunk(
@@ -26,7 +27,55 @@ export const createGoal = createAsyncThunk(
     }
   }
 );
-/// delete goal
+// /Get Goals
+export const getGoals = createAsyncThunk("goal/getAll", async (_, thunkApi) => {
+  try {
+    const token = thunkApi.getState().auth.user.token;
+    return await goalService.getGoals(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.date && error.reponse.data.message) ||
+      error.message ||
+      error.toString();
+
+    return thunkApi.rejectWithValue(message);
+  }
+});
+/// getGoal
+export const getSingleGoal = createAsyncThunk(
+  "goal/get",
+  async (id, thunkApi) => {
+    try {
+      const token = thunkApi.getState().auth.user.token;
+      return await goalService.getGoal(id, token);
+    } catch (error) {
+      const message =
+        (error.response && error.response.date && error.reponse.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
+export const updateGoal = createAsyncThunk(
+  "goals/update",
+  async (goalData, thunkApi) => {
+    try {
+      const token = thunkApi.getState().auth.user.token;
+      return await goalService.updateGoal(goalData, token);
+    } catch (error) {
+      const message =
+        (error.response && error.response.date && error.reponse.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 export const deleteGoal = createAsyncThunk(
   "goals/delete",
   async (id, thunkApi) => {
@@ -43,21 +92,6 @@ export const deleteGoal = createAsyncThunk(
     }
   }
 );
-
-//Get Goals
-export const getGoals = createAsyncThunk("goal/getAll", async (_ ,thunkApi) => {
-  try {
-    const token = thunkApi.getState().auth.user.token;
-    return await goalService.getGoals(token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.date && error.reponse.data.message) ||
-      error.message ||
-      error.toString();
-
-    return thunkApi.rejectWithValue(message);
-  }
-});
 
 export const goalSlice = createSlice({
   name: "goals",
@@ -104,6 +138,32 @@ export const goalSlice = createSlice({
         );
       })
       .addCase(deleteGoal.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getSingleGoal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleGoal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.goal = action.payload;
+      })
+      .addCase(getSingleGoal.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateGoal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateGoal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.goals.push(action.payload);
+      })
+      .addCase(updateGoal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
