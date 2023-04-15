@@ -31,7 +31,7 @@ module.exports = function (app) {
     })
   );
 };
-
+//  backend/server.js
 app.use("/api/goals", goalRoutes);
 app.use("/api/users", userRoutes);
 
