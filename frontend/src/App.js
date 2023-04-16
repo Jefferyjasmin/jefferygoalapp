@@ -6,6 +6,7 @@ import Dashborad from "./pages/Dashborad";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UpdateGaolForm from "./components/UpdateGoalForm";
+// "proxy": "http://localhost:5000",
 // import TaskDashboard from "./tasks/TaskDashboard";
 function App() {
   return (

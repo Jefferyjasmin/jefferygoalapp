@@ -24,10 +24,11 @@ app.use(express.json());
 // urlencoded
 app.use(express.urlencoded({ extended: false }));
 //middleWare
+//  target: "http://localhost:5000"
 module.exports = function (app) {
   app.use(
     createProxyMiddleware(["/api/goals", "/api/users"], {
-      target: "http://localhost:5000",
+      target: "https://goal-setter-rest-api-backend.onrender.com",
     })
   );
 };
