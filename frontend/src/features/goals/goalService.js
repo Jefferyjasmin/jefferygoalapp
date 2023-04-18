@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const base = "https://goal-setter-rest-api-backend.onrender.com";
 const API_URL = base + "/api/goals/";
 
@@ -33,7 +34,6 @@ const getGoal = async (goalID, token) => {
 };
 
 const updateGoal = async (data, token) => {
-  
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
